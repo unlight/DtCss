@@ -34,6 +34,31 @@ CHANGELOG
 
 class DtCssPlugin extends Gdn_Plugin {
 	
+/*	public function SettingsController_DashboardData_Handler() {
+		static $bWait = False;
+		// remove cached files
+		$LogFile = dirname(__FILE__).DS.'log.php';
+		if(!file_exists($LogFile)) return;
+		$UntouchedTime = time() - filemtime($LogFile);
+		$DeleteTime = strtotime('+5 days', 0);
+		if($UntouchedTime < $DeleteTime) return;
+		$LoggedData = array_map('trim', file($LogFile));
+		for($Count = count($LoggedData), $i = 1; $i < $Count; $i++){
+			$File = $LoggedData[$i];
+			if(file_exists($File)) unlink($File);
+		}
+		unlink($LogFile);
+	}*/
+	
+	public static function SaveLog($CachedCssFile) {
+		static $LogFile;
+		if (is_null($LogFile)){
+			$LogFile = dirname(__FILE__).DS.'log.php';
+			if(!file_exists($LogFile)) Gdn_FileSystem::SaveFile($LogFile, "<?php exit();\n");
+		}
+		file_put_contents($LogFile, $CachedCssFile."\n", FILE_APPEND);
+	}
+	
 	public function PluginController_DtCssDemo_Create($Sender) {
 		$Sender->AddCssFile( $this->GetWebResource('css/demo.dt.css') );
 		$Sender->View = $this->GetView('demo.php');
@@ -89,7 +114,10 @@ class DtCssPlugin extends Gdn_Plugin {
 			
 			$CacheFileName = sprintf('%s-c-%s.css', $Basename, $Hash);
 			$CachedCssFile = dirname($CssPath).DS.$CacheFileName;
-			if (!file_exists($CachedCssFile)) self::MakeCssFile($CssPath, $CachedCssFile);
+			if (!file_exists($CachedCssFile)){
+				self::SaveLog($CachedCssFile); // for deleting
+				self::MakeCssFile($CssPath, $CachedCssFile, True);
+			}
 	
 			// ... and replace preprocessored dt.css file by css
 			$CssInfo['FileName'] = substr($CachedCssFile, strlen(PATH_ROOT));
@@ -99,7 +127,6 @@ class DtCssPlugin extends Gdn_Plugin {
 		
 
 	}
-
 
 	public function Setup() {
 	}
