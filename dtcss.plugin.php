@@ -34,9 +34,15 @@ CHANGELOG
 
 class DtCssPlugin extends Gdn_Plugin {
 	
-/*	public function SettingsController_DashboardData_Handler() {
-		static $bWait = False;
-		// remove cached files
+	public function SettingsController_DashboardData_Handler() {
+		self::_CleanUp();
+	}
+	
+	// remove cached files
+	private static function _CleanUp(){
+		static $bWait;
+		if($bWait === True) return;
+		$bWait = True;
 		$LogFile = dirname(__FILE__).DS.'log.php';
 		if(!file_exists($LogFile)) return;
 		$UntouchedTime = time() - filemtime($LogFile);
@@ -48,9 +54,9 @@ class DtCssPlugin extends Gdn_Plugin {
 			if(file_exists($File)) unlink($File);
 		}
 		unlink($LogFile);
-	}*/
+	}
 	
-	public static function SaveLog($CachedCssFile) {
+	private static function SaveLog($CachedCssFile) {
 		static $LogFile;
 		if (is_null($LogFile)){
 			$LogFile = dirname(__FILE__).DS.'log.php';
