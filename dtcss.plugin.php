@@ -3,8 +3,7 @@
 $PluginInfo['DtCss'] = array(
 	'Name' => 'DtCss',
 	'Description' => 'Adapts DtCSS to work with Garden.',
-	'Version' => '1.1',
-	'Date' => '22 Aug 2010',
+	'Version' => '1.2',
 	'AuthorUrl' => 'http://code.google.com/p/dtcss/',
 	'RequiredApplications' => False,
 	'RequiredTheme' => False, 
@@ -17,22 +16,44 @@ $PluginInfo['DtCss'] = array(
 TODO:
 - enable expressions
 - parse error handling
-- empty cache while enabling/disabling plugin
 */
 
 /*
 CHANGELOG
-1.1 / 22 Aug 2010
-
-1.0 / 21 Aug 2010
+04 Sep 2010 / 1.2
+- delete all cached files when enabling/disabling plugin
+22 Aug 2010 / 1.1
+21 Aug 2010 / 1.0
 - save cached css file to same directory where .dt.css file
-
-0.9 / 20 Aug 2010
+20 Aug 2010 / 0.9
 - first release
-
 */
 
 class DtCssPlugin extends Gdn_Plugin {
+	
+	public function SettingsController_AfterEnablePlugin_Handler() {
+		self::_EmptyCache(); 
+	}
+	
+	public function SettingsController_AfterDisablePlugin_Handler() { 
+		self::EmptyCache(); 
+	}
+	
+	private static function _EmptyCache() {
+		$DirectoryAry = array(PATH_APPLICATIONS, PATH_PLUGINS, PATH_THEMES);
+		foreach($DirectoryAry as $DirectoryPath) {
+			$Directory = new RecursiveDirectoryIterator(PATH_APPLICATIONS);
+			foreach(new RecursiveIteratorIterator($Directory) as $File){
+				$Basename = $File->GetBasename();
+				$Extension = pathinfo($Basename, 4);
+				$Filename = pathinfo($Basename, 8);
+				if ($Extension != 'css' || empty($Filename[11]) || !preg_match('/^\w+\-c\-[a-z0-9]{6}$/', $Filename)) continue;
+				//d(@$Extension, @$Filename, $File, get_class_methods($File), $File->GetBasename());
+				$CachedFile = $File->GetRealPath();
+				unlink($CachedFile);
+			}
+		}
+	}
 	
 	public function SettingsController_DashboardData_Handler() {
 		self::_CleanUp();
@@ -140,3 +161,4 @@ class DtCssPlugin extends Gdn_Plugin {
 	
 	
 }
+
