@@ -96,7 +96,7 @@ class DtCssPlugin extends Gdn_Plugin {
 	public static function GetHash($S) {
 		$Crc = sprintf('%u', crc32($S));
 		$Hash = base_convert($Crc, 10, 36);
-		$Hash = substr($Hash, -6);
+		$Hash = sprintf("%06s", substr($Hash, -6)); // zero-padding for string length < 6
 		return $Hash;
 	}
 	
