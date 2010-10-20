@@ -3,7 +3,7 @@
 $PluginInfo['DtCss'] = array(
 	'Name' => 'DtCss',
 	'Description' => 'Adapts DtCSS to work with Garden.',
-	'Version' => '1.2.1',
+	'Version' => '1.2.2',
 	'AuthorUrl' => 'http://code.google.com/p/dtcss/',
 	'RequiredApplications' => False,
 	'RequiredTheme' => False, 
