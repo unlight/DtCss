@@ -36,7 +36,7 @@ class DtCssPlugin extends Gdn_Plugin {
 	}
 	
 	public function SettingsController_AfterDisablePlugin_Handler() { 
-		self::EmptyCache(); 
+		self::_EmptyCache(); 
 	}
 	
 	private static function _EmptyCache() {
