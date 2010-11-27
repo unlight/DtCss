@@ -42,14 +42,13 @@ class DtCssPlugin extends Gdn_Plugin {
 	private static function _EmptyCache() {
 		$DirectoryAry = array(PATH_APPLICATIONS, PATH_PLUGINS, PATH_THEMES);
 		foreach($DirectoryAry as $DirectoryPath) {
-			$Directory = new RecursiveDirectoryIterator(PATH_APPLICATIONS);
+			$Directory = new RecursiveDirectoryIterator($DirectoryPath);
 			foreach(new RecursiveIteratorIterator($Directory) as $File){
 				$Basename = $File->GetBasename();
 				$Extension = pathinfo($Basename, 4);
 				$Filename = pathinfo($Basename, 8);
 				if ($Extension != 'css') continue;
 				if (!preg_match('/^\w+\-c\-[a-z0-9]{6}$/', $Filename)) continue;
-				//d(@$Extension, $File->GetRealPath(), @$Filename, $File, get_class_methods($File), $File->GetBasename());
 				$CachedFile = $File->GetRealPath();
 				unlink($CachedFile);
 			}
