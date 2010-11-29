@@ -18,21 +18,14 @@ TODO:
 - parse error handling
 */
 
-/*
-CHANGELOG
-04 Sep 2010 / 1.2
-- delete all cached files when enabling/disabling plugin
-22 Aug 2010 / 1.1
-21 Aug 2010 / 1.0
-- save cached css file to same directory where .dt.css file
-20 Aug 2010 / 0.9
-- first release
-*/
-
 class DtCssPlugin extends Gdn_Plugin {
 	
+	public function Tick_Every_10_Days_Handler() {
+		self::_EmptyCache();
+	}
+	
 	public function SettingsController_AfterEnablePlugin_Handler() {
-		self::_EmptyCache(); 
+		self::_EmptyCache();
 	}
 	
 	public function SettingsController_AfterDisablePlugin_Handler() { 
