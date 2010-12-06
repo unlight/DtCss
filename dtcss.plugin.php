@@ -3,7 +3,7 @@
 $PluginInfo['DtCss'] = array(
 	'Name' => 'DtCss',
 	'Description' => 'Adapts DtCSS to work with Garden.',
-	'Version' => '1.2.3',
+	'Version' => '1.2.4',
 	'AuthorUrl' => 'http://code.google.com/p/dtcss/',
 	'RequiredApplications' => False,
 	'RequiredTheme' => False, 
@@ -20,7 +20,7 @@ TODO:
 
 class DtCssPlugin extends Gdn_Plugin {
 	
-	public function Tick_Every_10_Days_Handler() {
+	public function Tick_Every_20_Days_Handler() {
 		self::_EmptyCache();
 	}
 	
