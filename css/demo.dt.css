@@ -1,6 +1,24 @@
 #define TEXT_COLOR red
 #define LINK_COLOR blue
 
+#define BodyWidth 97
+#define PanelWidth 20
+
+#PanelB { width: <# PanelWidth #>%; }
+#ContentB { width: <# (BodyWidth - PanelWidth) #>%; }
+
+/* CSS3 */
+
+div.DtCssDemo {
+	a {
+		text-shadow: black 1px 1px 2px, red 0 0 1em, white 1px 3px 1px;
+	}
+	h1 {
+		text-shadow: black 1px 1px 2px, red 0 0 1em;
+	}
+}
+
+
 %Rounded{
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;

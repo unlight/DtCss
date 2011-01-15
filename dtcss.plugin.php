@@ -3,10 +3,11 @@
 $PluginInfo['DtCss'] = array(
 	'Name' => 'DtCss',
 	'Description' => 'Adapts DtCSS to work with Garden.',
-	'Version' => '1.2.4',
+	'Version' => '1.2.5',
+	'Author' => 'DtCss',
 	'AuthorUrl' => 'http://code.google.com/p/dtcss/',
 	'RequiredApplications' => False,
-	'RequiredTheme' => False, 
+	'RequiredTheme' => False,
 	'RequiredPlugins' => False,
 	'RegisterPermissions' => False,
 	'SettingsPermission' => False
@@ -41,7 +42,7 @@ class DtCssPlugin extends Gdn_Plugin {
 				$Extension = pathinfo($Basename, 4);
 				$Filename = pathinfo($Basename, 8);
 				if ($Extension != 'css') continue;
-				if (!preg_match('/^\w+\-c\-[a-z0-9]{6}$/', $Filename)) continue;
+				if (!preg_match('/^[\.\w]+\-c\-[a-z0-9]{6}$/', $Filename)) continue;
 				$CachedFile = $File->GetRealPath();
 				unlink($CachedFile);
 			}
@@ -71,7 +72,7 @@ class DtCssPlugin extends Gdn_Plugin {
 	}
 	
 	public function Base_BeforeAddCss_Handler($Sender) {
-		if($Sender->DeliveryType() != DELIVERY_TYPE_ALL) return;
+		if ($Sender->DeliveryType() != DELIVERY_TYPE_ALL) return;
 		$CssFiles =& $Sender->EventArguments['CssFiles'];
 		foreach ($CssFiles as $Index => $CssInfo) {
 			$CssFile = $CssInfo['FileName'];
@@ -101,7 +102,7 @@ class DtCssPlugin extends Gdn_Plugin {
 			$Basename = pathinfo(pathinfo($CssPath, 8), 8); // without .dt.css
 			$Hash = self::GetHash($CssPath . filemtime($CssPath));
 			
-			$CacheFileName = sprintf('%s-c-%s.css', $Basename, $Hash);
+			$CacheFileName = sprintf('.%s-c-%s.css', $Basename, $Hash);
 			$CachedCssFile = dirname($CssPath).DS.$CacheFileName;
 			if (!file_exists($CachedCssFile)){
 				self::MakeCssFile($CssPath, $CachedCssFile, True);
