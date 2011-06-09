@@ -3,7 +3,7 @@
 $PluginInfo['DtCss'] = array(
 	'Name' => 'DtCss',
 	'Description' => 'Adapts DtCSS to work with Garden. DtCSS is a PHP script that preprocesses your CSS file. It speeds up CSS coding by extending the features to CSS. Such as nested selectors, color mixing and more. DtCSS reads the CSS file with special syntax written for DtCSS, and outputs the standard CSS. <a href="http://code.google.com/p/dtcss/">DtCSS project home page</a>',
-	'Version' => '1.3f',
+	'Version' => '1.2.6',
 	'Author' => 'DtCss',
 	'Date' => 'Summer 2011',
 	'AuthorUrl' => 'http://github.com/search?q=DtCss&type=Repositories',
